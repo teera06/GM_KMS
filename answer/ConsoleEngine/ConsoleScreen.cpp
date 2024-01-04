@@ -3,6 +3,5 @@
 
 void ConsoleScreen::test()
 {
-	printf_s("성공\n");
-
+	printf_s("라이브러리 연결 성공\n");
 }

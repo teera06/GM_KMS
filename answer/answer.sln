@@ -14,6 +14,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game", "Game", "{6B227E2F-0F78-4F6B-BF16-119A64447D44}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Galaga", "Galaga\Galaga.vcxproj", "{9C0E8032-F442-4E79-A9BC-B75585015394}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7BFC4380-26D0-4AFA-92CB-8481EFF311A8} = {7BFC4380-26D0-4AFA-92CB-8481EFF311A8}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
