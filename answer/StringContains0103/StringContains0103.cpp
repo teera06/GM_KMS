@@ -24,11 +24,14 @@ StringReturn StringEqual(const char* const _Left, const char* const _Right)
 
 void StringAdd(char* _Dest, const char* const _Left, const char* const _Right)
 {
-    for (int i = 0; i < strlen(_Left); i++) {
+    int Leftlen = static_cast<int>(strlen(_Left));
+    int Rightlen = static_cast<int>(strlen(_Right));
+
+    for (int i = 0; i < Leftlen; i++) {
         _Dest[i] = _Left[i];
     }
 
-    for (int i = 0; i < strlen(_Right); i++) {
+    for (int i = 0; i < Rightlen; i++) {
         _Dest[strlen(_Left) + i] = _Right[i];
     }
 }
@@ -38,7 +41,7 @@ int StringContains(const char* const _Dest, const char* const _Find)
 {
     int count = 0;
     bool check = true; // _Find 문자 하나씩 비교를 하기 위한 bool (같으면 true, 다르면 false)
-    int len = strlen(_Find) - 1; // _FInd 문자의 길이-1 -> 인덱스 비교
+    int len = static_cast<int>(strlen(_Find)) - 1; // _FInd 문자의 길이-1 -> 인덱스 비교
     for (int i = 0; i < strlen(_Dest); i++) { // _Dest 길이값 만큼 for문
 
         while (true) { // while 무한반복
