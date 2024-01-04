@@ -1,7 +1,7 @@
-#include <iostream>
 #include "ConsoleScreen.h"
+#include <iostream>
 
-void ConsoleScreen::Test()
+void ConsoleScreen::test()
 {
 	printf_s("¼º°ø\n");
 

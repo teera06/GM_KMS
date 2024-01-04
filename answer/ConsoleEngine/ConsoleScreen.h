@@ -2,6 +2,7 @@
 class ConsoleScreen
 {
 public:
-	void Test();
+	void test();
+
 };
 
