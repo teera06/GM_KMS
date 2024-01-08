@@ -2,5 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Galaga.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Bullet.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Bullet.h" />
   </ItemGroup>
 </Project>
