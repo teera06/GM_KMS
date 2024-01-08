@@ -11,7 +11,13 @@ public:
 		return IsFire;
 	}
 
+	bool GetIsEnd()
+	{
+		return IsGameEnd;
+	}
+
 private:
 	bool IsFire = false;
+	bool IsGameEnd = false;
 };
 

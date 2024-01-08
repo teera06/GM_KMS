@@ -12,5 +12,5 @@ void Bullet::Move()
 		return;
 	}
 
-	AddPos(Down);
+	AddPos(Up);
 }

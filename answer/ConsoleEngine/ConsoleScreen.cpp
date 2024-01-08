@@ -9,6 +9,14 @@
 // 자체 헤더
 #include "ConsoleObject.h"
 
+ConsoleScreen::ConsoleScreen()
+{
+
+}
+ConsoleScreen::~ConsoleScreen()
+{
+	ReleaseScreen();
+}
 
 void ConsoleScreen::CreateScreen(/*&NewScreen => this, */int _ScreenX, int _ScreenY)
 {

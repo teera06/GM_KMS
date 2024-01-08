@@ -38,6 +38,9 @@ void Player::KeyInput()
 	case 'q':
 		IsFire = true;
 		break;
+	case '1':
+		IsGameEnd = true;
+		break;
 	default:
 		break;
 	}

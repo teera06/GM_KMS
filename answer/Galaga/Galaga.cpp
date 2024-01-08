@@ -6,18 +6,41 @@
 #include <ConsoleEngine/EngineDebug.h>
 #include "Player.h"
 #include "Bullet.h"
+#include "Monster.h"
 
+// 선생님이 말하는 대충과 여러분들의 대충이 다를것이고
+// 선생님이 (아무문제 없이) 눈에 보이게 만들기만 된다.
+// 이게임은 심각한 문제가 있습니다.
 
 int main()
 {
+    // 5분 이상 걸릴수 없다.
     LeckCheck;
 
     ConsoleScreen NewScreen = ConsoleScreen();
-    NewScreen.CreateScreen(/*&NewScreen => this, */30, 10);
+    NewScreen.CreateScreen(/*&NewScreen => this, */20, 20);
 
     Player NewPlayer;
+    // 리스트 이니셜라이저
+    // int2 PlayerStartPos = { NewScreen.GetScreenX() / 2, NewScreen.GetScreenY() };
+    NewPlayer.SetPos({ NewScreen.GetScreenX() / 2, NewScreen.GetScreenY() - 2 });
 
-    const int BulletCount = 1000;
+    // 2가지로 나뉜다.
+    // 동적할당 할거냐?
+    // 정적으로 할거냐?
+
+    const int MonsterCount = NewScreen.GetScreenX() / 2;
+
+    ConsoleObject** ArrMonster = new ConsoleObject * [MonsterCount];
+    for (int i = 0; i < MonsterCount; i++)
+    {
+        ArrMonster[i] = new Monster();
+        ArrMonster[i]->SetPos({ i, 0 });
+        ArrMonster[i]->SetRenderChar('&');
+    }
+
+
+    const int BulletCount = NewScreen.GetScreenY() * 2;
     Bullet* NewBullet = new Bullet[BulletCount];
 
     int CurBullet = 0;
@@ -29,11 +52,28 @@ int main()
 
         NewPlayer.KeyInput();
 
+        if (true == NewPlayer.GetIsEnd())
+        {
+            break;
+        }
+
         if (true == NewPlayer.GetIsFire())
         {
             NewBullet[CurBullet].SetPos(NewPlayer.GetPos());
             NewBullet[CurBullet].Fire();
+            // 총알의 개수는 무한하지 않다.
             ++CurBullet;
+
+            if (BulletCount <= CurBullet)
+            {
+                CurBullet = 0;
+            }
+
+        }
+
+        for (int i = 0; i < MonsterCount; i++)
+        {
+            NewScreen.SetChar(ArrMonster[i]);
         }
 
         for (int i = 0; i < BulletCount; i++)
@@ -57,7 +97,6 @@ int main()
         NewBullet = nullptr;
     }
 
-    NewScreen.ReleaseScreen();
 }
 
 // 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
