@@ -15,44 +15,48 @@
 int main()
 {
     // 5분 이상 걸릴수 없다.
-    LeckCheck;
+    LeckCheck; // 릭 검사 
 
-    ConsoleScreen NewScreen = ConsoleScreen();
-    NewScreen.CreateScreen(/*&NewScreen => this, */20, 20);
 
-    Player NewPlayer;
+    // 객체화 및 동적 할당
+    ConsoleScreen NewScreen = ConsoleScreen(); // ConsoleScreen 객체화
+    NewScreen.CreateScreen(/*&NewScreen => this, */20, 20); // 맵 크기 생성 (X,Y)
+
+    Player NewPlayer; // Player 객체화
     // 리스트 이니셜라이저
     // int2 PlayerStartPos = { NewScreen.GetScreenX() / 2, NewScreen.GetScreenY() };
-    NewPlayer.SetPos({ NewScreen.GetScreenX() / 2, NewScreen.GetScreenY() - 2 });
+    NewPlayer.SetPos({ NewScreen.GetScreenX() / 2, NewScreen.GetScreenY() - 2 }); // 플레이어 위치 설정
 
     // 2가지로 나뉜다.
     // 동적할당 할거냐?
     // 정적으로 할거냐?
 
-    const int MonsterCount = NewScreen.GetScreenX() / 2;
+    const int MonsterCount = NewScreen.GetScreenX() / 2; // 몬스터 수 
 
-    ConsoleObject** ArrMonster = new ConsoleObject * [MonsterCount];
+    ConsoleObject** ArrMonster = new ConsoleObject * [MonsterCount]; // 몬스터 수 만큼 ConsoleObject 동적할당 (이중 포인터)
+    // 메모리 그려보기
     for (int i = 0; i < MonsterCount; i++)
     {
-        ArrMonster[i] = new Monster();
-        ArrMonster[i]->SetPos({ i, 0 });
-        ArrMonster[i]->SetRenderChar('&');
+        ArrMonster[i] = new Monster(); // ArrMoster[i]에 Monster를 동적 할당 
+        ArrMonster[i]->SetPos({ i, 0 }); // i값에 따른 위치 선정
+        ArrMonster[i]->SetRenderChar('&'); // 렌더링 &
     }
 
+    const int BulletCount = NewScreen.GetScreenY() * 2; // Y축 기준으로 탄환 개수 정함
+    Bullet* NewBullet = new Bullet[BulletCount]; // 정한 탄한 개수만큼 Bullet 동적 할당
 
-    const int BulletCount = NewScreen.GetScreenY() * 2;
-    Bullet* NewBullet = new Bullet[BulletCount];
+    int CurBullet = 0; // 발사한 총알 개수 체크용
+    // ---------------------------------------
 
-    int CurBullet = 0;
-
+    // while 문부터 게임의 진행 담당
     while (true)
     {
         // 밀리세컨드 단위
-        Sleep(100);
+        Sleep(100); // 0.1 초 정지
 
-        NewPlayer.KeyInput();
+        NewPlayer.KeyInput(); // 플레이어 키 입력
 
-        if (true == NewPlayer.GetIsEnd())
+        if (true == NewPlayer.GetIsEnd()) // GetIsEnd값이 true가 되면 게임 종료
         {
             break;
         }
