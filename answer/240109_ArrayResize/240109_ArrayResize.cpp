@@ -69,7 +69,7 @@ public:
         int n = NumValue; // 그전 크기값을 미리 받음
         NumValue = _Size;
 
-        int* ptr = ArrPtr; // Ptr에 기존 Arrptr값을 복사
+        int* ptr = ArrPtr; // Ptr에 기존 Arrptr값을 얕은 복사
 
         ArrPtr = new int[_Size]; // 다시 동적할당으로 Arrptr 생성
         // ptr =    [0][1][2][3][4]
@@ -79,12 +79,12 @@ public:
         // ArrPtr = [?][?][?]
 
         if (n > NumValue) { // 그전의 길이가 새로 리사이트한 길이보다 큰 경우
-            for (int i = 0; i < NumValue; i++) { // 새로 받은 길이를 기준으로 복사
+            for (int i = 0; i < NumValue; i++) { // 새로 받은 길이를 기준으로 깊은 복사
                 ArrPtr[i] = ptr[i];
             }
         }
         else if (n <= NumValue) { // 새로받은길이가 그전 길이보다 크거나 같은경우 
-            for (int i = 0; i < n; i++) { // 그전 길이를 기준으로 복사
+            for (int i = 0; i < n; i++) { // 그전 길이를 기준으로 깊은 복사
                 ArrPtr[i] = ptr[i];
             }
         }
