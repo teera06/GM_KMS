@@ -142,16 +142,16 @@ void ConsoleScreen::ClearScreen()
 
 void ConsoleScreen::PrintScreen()
 {
-	system("cls");
+	system("cls"); // 화면 한번 지우고 시작
 
-	for (int y = 0; y < ScreenY; y++)
+	for (int y = 0; y < ScreenY; y++) // 
 	{
 		if (nullptr == ScreenData[y])
 		{
 			MsgBoxAssert("존재하지 않은 라인을 출력하려고 했습니다");
 		}
 
-		printf_s(ScreenData[y]);
+		printf_s(ScreenData[y]); 
 	}
 
 	ClearScreen();

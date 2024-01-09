@@ -61,41 +61,41 @@ int main()
             break;
         }
 
-        if (true == NewPlayer.GetIsFire())
+        if (true == NewPlayer.GetIsFire()) // GetIsFire가 true이면 총알을 발사한 상태
         {
-            NewBullet[CurBullet].SetPos(NewPlayer.GetPos());
-            NewBullet[CurBullet].Fire();
+            NewBullet[CurBullet].SetPos(NewPlayer.GetPos()); // 플레이어의 위치를 기준으로 총알의 위치를 선정
+            NewBullet[CurBullet].Fire(); // CurBullet의 기준 번째의 총알의 상태를 발사한 상태인 false -> true로 변경
             // 총알의 개수는 무한하지 않다.
-            ++CurBullet;
+            ++CurBullet; // CurBullet 을 증감해 다음 총알 순번으로 사용
 
-            if (BulletCount <= CurBullet)
+            if (BulletCount <= CurBullet) // 정해진 BulletCount의 총알 개수보다 사용한 총알 개수인 CurBullet이 크거나 같아지는 경우 0으로 다시 돌린다.
             {
                 CurBullet = 0;
             }
 
         }
 
-        for (int i = 0; i < MonsterCount; i++)
+        for (int i = 0; i < MonsterCount; i++) // 동적할당 한 몬스터 수만큼 몬스터의 위치와 랜더링 
         {
-            NewScreen.SetChar(ArrMonster[i]);
+            NewScreen.SetChar(ArrMonster[i]); // 맵에 위치와 랜더 설정
         }
 
-        for (int i = 0; i < BulletCount; i++)
+        for (int i = 0; i < BulletCount; i++) // BulletCount 값만큼의 for문의 반복
         {
-            if (false == NewBullet[i].GetIsFire())
+            if (false == NewBullet[i].GetIsFire()) // 
             {
                 continue;
             }
-
-            NewBullet[i].Move();
-            NewScreen.SetChar(NewBullet[i]);
+            // 발사한 상태인 true인 경우
+            NewBullet[i].Move(); // 
+            NewScreen.SetChar(NewBullet[i]); // 맵에 총알 위치와 랜더 설정
         }
 
-        NewScreen.SetChar(NewPlayer);
-        NewScreen.PrintScreen();
+        NewScreen.SetChar(NewPlayer); // 플레이어 위치, 랜더 설정
+        NewScreen.PrintScreen(); // 화면으로 보여주기 -> 콘솔창 한번 지우고 마지막에 화면 초기값으로 돌리기
     }
 
-    if (NewBullet)
+    if (NewBullet) // 릭을 위한 방지
     {
         delete[] NewBullet;
         NewBullet = nullptr;

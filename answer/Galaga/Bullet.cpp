@@ -5,12 +5,12 @@ Bullet::Bullet()
 	SetRenderChar('|');
 }
 
-void Bullet::Move()
+void Bullet::Move() // true 인경우 즉 발사한 상태에서만 실행
 {
 	if (false == IsFire)
 	{
 		return;
 	}
 
-	AddPos(Up);
+	AddPos(Up); // 위로 이동
 }
