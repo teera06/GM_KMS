@@ -120,12 +120,13 @@ public:
 		return iterator(End);
 	}
 
+	//- 반대 개념
 	reverse_iterator rbegin()
 	{
-		return reverse_iterator(End->Prev);
+		return reverse_iterator(End->Prev); // 시작 부분은 End의 Prev
 	}
 
-	reverse_iterator rend()
+	reverse_iterator rend() // 끝부분은 start로 설정
 	{
 		return reverse_iterator(Start);
 	}
