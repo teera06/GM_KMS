@@ -26,6 +26,11 @@ public:
 		Pos += _Dir;
 	}
 
+	virtual void Update()
+	{
+
+	}
+
 protected:
 
 private:

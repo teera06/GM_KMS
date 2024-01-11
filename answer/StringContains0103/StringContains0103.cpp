@@ -1,96 +1,232 @@
-// StringContains.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
-//
-
 #include <iostream>
+#include <list>
+#include <ConsoleEngine/EngineDebug.h>
 
-enum class StringReturn
+typedef int DataType;
+
+// 노드형태입니다.
+class MyList
 {
-    Equal,
-    NotEqual
+	// Node가 데이터를 1개 받기 때문입니다.
+// 더미노드라는 방식을 사용할 겁니다.
+private:
+	class ListNode
+	{
+	public:
+		DataType Data = DataType();
+		ListNode* Next = nullptr;
+		ListNode* Prev = nullptr;
+	};
+
+
+public:
+	class iterator
+	{
+		// class MyList전방 선언과 동시에 friend를 건건데
+		// mylist가 뭔지 알기 때문에.
+		friend MyList;
+
+	public:
+		iterator()
+		{
+		}
+
+		iterator(ListNode* _CurNode)
+			: CurNode(_CurNode)
+		{
+		}
+
+		~iterator()
+		{
+		}
+
+		bool operator!=(const iterator& _Other)
+		{
+			return CurNode != _Other.CurNode;
+		}
+
+		DataType& operator*()
+		{
+			return CurNode->Data;
+		}
+
+		// 연산자 겹지정 중에 
+		void operator++()
+		{
+			CurNode = CurNode->Next;
+		}
+
+
+	private:
+		ListNode* CurNode = nullptr;
+	};
+
+
+	MyList()
+	{
+		Start->Next = End;
+		End->Prev = Start;
+	}
+
+	~MyList()
+	{
+		if (nullptr != Start->Next)
+		{
+			delete Start;
+			Start = nullptr;
+		}
+
+		if (nullptr != End->Prev)
+		{
+			delete End;
+			End = nullptr;
+		}
+	}
+
+	iterator begin()
+	{
+		return iterator(Start->Next);
+	}
+
+	iterator end()
+	{
+		return iterator(End);
+	}
+
+	// End의 Prev에 새로운 데이터를 넣겠다.
+	void push_back(const DataType& _Data)
+	{
+		ListNode* NewNode = new ListNode();
+		NewNode->Data = _Data;
+
+		NewNode->Next = End;
+		NewNode->Prev = End->Prev;
+
+		ListNode* PrevNode = NewNode->Prev;
+		ListNode* NextNode = NewNode->Next;
+
+		PrevNode->Next = NewNode;
+		NextNode->Prev = NewNode;
+	}
+
+	// Start의 Next에 새로운 데이터를 넣겠다.
+	void push_front(const DataType& _Data)
+	{
+		// 역함수
+		ListNode* NewNode = new ListNode();
+		NewNode->Data = _Data;
+
+		NewNode->Prev = Start;
+		NewNode->Next = Start->Next;
+
+		ListNode* PrevNode = NewNode->Prev;
+		ListNode* NextNode = NewNode->Next;
+
+		PrevNode->Next = NewNode;
+		NextNode->Prev = NewNode;
+
+
+
+	}
+
+	iterator erase(iterator& _Iter)
+	{
+		if (_Iter.CurNode == Start)
+		{
+			MsgBoxAssert("Start를 삭제하려고 했습니다.");
+		}
+
+		if (_Iter.CurNode == End)
+		{
+			MsgBoxAssert("End를 삭제하려고 했습니다.");
+		}
+
+		iterator ReturnIter;
+
+		if (nullptr != _Iter.CurNode)
+		{
+			// 다음 노드를 리턴
+			ReturnIter = iterator(_Iter.CurNode->Next);
+
+			ListNode* PrevNode = _Iter.CurNode->Prev;
+			ListNode* NextNode = _Iter.CurNode->Next;
+
+			PrevNode->Next = NextNode;
+			NextNode->Prev = PrevNode;
+
+			// 삭제하기 전에
+			// 삭제한다는것은 데이터를 전부다 지우겠다는 건데.
+			// 지운걸 사용할수 없다.
+			if (nullptr != _Iter.CurNode)
+			{
+				delete _Iter.CurNode;
+				_Iter.CurNode = nullptr;
+			}
+		}
+
+		return ReturnIter;
+	}
+
+
+protected:
+
+private:
+
+	ListNode* Start = new ListNode();
+	ListNode* End = new ListNode();
 };
-
-StringReturn StringEqual(const char* const _Left, const char* const _Right)
-{
-
-    if (strcmp(_Left, _Right) == 0)
-    {
-        return StringReturn::Equal;
-    }
-    else
-    {
-        return StringReturn::NotEqual;
-    }
-}
-
-void StringAdd(char* _Dest, const char* const _Left, const char* const _Right)
-{
-    int Leftlen = static_cast<int>(strlen(_Left));
-    int Rightlen = static_cast<int>(strlen(_Right));
-
-    for (int i = 0; i < Leftlen; i++) {
-        _Dest[i] = _Left[i];
-    }
-
-    for (int i = 0; i < Rightlen; i++) {
-        _Dest[strlen(_Left) + i] = _Right[i];
-    }
-}
-
-// ------------------------------------------------------
-int StringContains(const char* const _Dest, const char* const _Find)
-{
-    int count = 0;
-    bool check = true; // _Find 문자 하나씩 비교를 하기 위한 bool (같으면 true, 다르면 false)
-    int len = static_cast<int>(strlen(_Find)) - 1; // _FInd 문자의 길이-1 -> 인덱스 비교
-    for (int i = 0; i < strlen(_Dest); i++) { // _Dest 길이값 만큼 for문
-
-        while (true) { // while 무한반복
-
-            if (_Dest[i + len] == _Find[len]) { // _Fine 길이를 기준으로 뒤에서부터 문자 하나씩 비교 
-                --len; // _Find 길이가 저장되어 있는 len의 길이를 하나씩 줄여가며 인덱스 비교
-                check = true; // 문자가 같으므로 true
-            }
-            else { // 문자가 다른 경우
-                check = false; // false 후 
-                break; // 반복 문 탈출
-            }
-
-            if (len < 0) { // len의 길이가 0보다 작아졌다는 말은 같은 문자를 찾았다는 뜻
-                len = strlen(_Find) - 1; // len에 다시 _FInd 문자의 길이-1값 넣어줌
-                break; // 반복문 탈출
-            }
-        }
-
-        if (check == true) { // check가 true로 유지될 경우 카우트 개수 증가
-            ++count;
-        }
-    }
-
-    return count;
-}
 
 int main()
 {
-    {
-        // 오른쪽과 왼쪽이 같아?
-        StringEqual("AAAAA", "AAAAA");
-    }
+	LeckCheck;
 
-    {
-        char Arr[100] = {};
-        StringAdd(Arr, "gfadsgf", "fasdfsda");
-        // "cccccddddd"
-        int a = 0;
-    }
+	{
+		std::cout << "std 리스트" << std::endl;
+		std::list<int> NewList = std::list<int>();
+		for (int i = 0; i < 5; i++)
+		{
+			NewList.push_back(i);
+			// NewList.push_front();
+		}
 
-    {
-        // int Result = StringContains("ababcccccabab", "ab");
+		std::list<int>::iterator StartIter = NewList.begin();
+		std::list<int>::iterator EndIter = NewList.end();
 
-        int Result = StringContains("ababcccccabab", "ab");
-        printf_s("%d", Result);
+		// 지워진 노드의 다음 노드를 리턴합니다.
+		StartIter = NewList.erase(StartIter);
 
-        int a = 0;
-    }
+		for (/*std::list<int>::iterator StartIter = NewList.begin()*/
+			; StartIter != EndIter
+			; ++StartIter)
+		{
+			std::cout << *StartIter << std::endl;
+			// std::cout << StartIter.operator*() << std::endl;
+		}
+	}
+
+	{
+		std::cout << "내 리스트" << std::endl;
+		MyList NewList = MyList();
+		for (int i = 0; i < 10; i++)
+		{
+			NewList.push_front(i);
+			// NewList.push_front();
+		}
+
+		MyList::iterator StartIter = NewList.begin();
+		MyList::iterator EndIter = NewList.end();
+
+		StartIter = NewList.erase(StartIter);
+
+		for (/*std::list<int>::iterator StartIter = NewList.begin()*/
+			; StartIter != EndIter
+			; ++StartIter
+			)
+		{
+			std::cout << *StartIter << std::endl;
+			// std::cout << StartIter.operator*() << std::endl;
+		}
+	}
 }
 
 // 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴

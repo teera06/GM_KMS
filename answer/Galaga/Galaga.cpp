@@ -12,95 +12,102 @@
 // 선생님이 (아무문제 없이) 눈에 보이게 만들기만 된다.
 // 이게임은 심각한 문제가 있습니다.
 
+class Test
+{
+public:
+    void TestFunction()
+    {
+        *Ptr = 20;
+    }
+
+public:
+    int* Ptr;
+};
+
 int main()
 {
     // 5분 이상 걸릴수 없다.
-    LeckCheck; // 릭 검사 
+    LeckCheck;
 
+    int Value = 0;
+    Test NewTest;
+    // int* Ptr = &Value;
+    // *Ptr = 20;
+    NewTest.Ptr = &Value;
+    NewTest.TestFunction();
 
-    // 객체화 및 동적 할당
-    ConsoleScreen NewScreen = ConsoleScreen(); // ConsoleScreen 객체화
-    NewScreen.CreateScreen(/*&NewScreen => this, */20, 20); // 맵 크기 생성 (X,Y)
+    ConsoleScreen NewScreen = ConsoleScreen();
+    NewScreen.CreateScreen(/*&NewScreen => this, */20, 20);
 
-    Player NewPlayer; // Player 객체화
-    // 리스트 이니셜라이저
-    // int2 PlayerStartPos = { NewScreen.GetScreenX() / 2, NewScreen.GetScreenY() };
-    NewPlayer.SetPos({ NewScreen.GetScreenX() / 2, NewScreen.GetScreenY() - 2 }); // 플레이어 위치 설정
 
     // 2가지로 나뉜다.
     // 동적할당 할거냐?
     // 정적으로 할거냐?
 
-    const int MonsterCount = NewScreen.GetScreenX() / 2; // 몬스터 수 
+    const int MonsterCount = NewScreen.GetScreenX() / 2;
 
-    ConsoleObject** ArrMonster = new ConsoleObject * [MonsterCount]; // 몬스터 수 만큼 ConsoleObject 동적할당 (이중 포인터)
-    // 메모리 그려보기
+    // 모든건 객체가 될수 있다.
+    // 모든건 클래스가 될수 있다.
+    // 배열이라는 것 조차 클래스가 되어야 하는게 객체지향입니다.
+    // 크기 알수 없다.
+    // 크기??
+    // 자료구조를 배울수 있는 기본을 익히기 위해서는 템플릿을 익혀야 한다.
+    //ConsoleObjectPtrArray Array;
+
+    // 동적배열이든 정적배열이든 불편하기 짝이 없다.
+    // 
+    // 
+    // 깊은 복사 얕은 복사도 배워야 합니다.
+    std::vector<ConsoleObject*> AllObject;
+    AllObject.reserve(1000);
+
+    // 업캐스팅
+    Player* NewPlayer = new Player();
+    NewPlayer->SetPos({ NewScreen.GetScreenX() / 2, NewScreen.GetScreenY() - 2 });
+    NewPlayer->SetAllObject(&AllObject);
+    AllObject.push_back(NewPlayer);
+
+
+    // ConsoleObject** ArrMonster = new ConsoleObject*[MonsterCount];
     for (int i = 0; i < MonsterCount; i++)
     {
-        ArrMonster[i] = new Monster(); // ArrMoster[i]에 Monster를 동적 할당 
-        ArrMonster[i]->SetPos({ i, 0 }); // i값에 따른 위치 선정
-        ArrMonster[i]->SetRenderChar('&'); // 렌더링 &
+        // 내가 new를 햇다면
+        Monster* NewMonsterPtr = new Monster();
+        NewMonsterPtr->SetPos({ i, 0 });
+        NewMonsterPtr->SetRenderChar('&');
+        AllObject.push_back(NewMonsterPtr);
     }
 
-    const int BulletCount = NewScreen.GetScreenY() * 2; // Y축 기준으로 탄환 개수 정함
-    Bullet* NewBullet = new Bullet[BulletCount]; // 정한 탄한 개수만큼 Bullet 동적 할당
-
-    int CurBullet = 0; // 발사한 총알 개수 체크용
-    // ---------------------------------------
-
-    // while 문부터 게임의 진행 담당
     while (true)
     {
         // 밀리세컨드 단위
-        Sleep(100); // 0.1 초 정지
+        Sleep(100);
 
-        NewPlayer.KeyInput(); // 플레이어 키 입력
+        for (size_t i = 0; i < AllObject.size(); i++)
+        {
+            AllObject[i]->Update();
+        }
 
-        if (true == NewPlayer.GetIsEnd()) // GetIsEnd값이 true가 되면 게임 종료
+        for (size_t i = 0; i < AllObject.size(); i++)
+        {
+            NewScreen.SetChar(AllObject[i]);
+        }
+
+        if (true == NewPlayer->GetIsEnd())
         {
             break;
         }
-
-        if (true == NewPlayer.GetIsFire()) // GetIsFire가 true이면 총알을 발사한 상태
-        {
-            NewBullet[CurBullet].SetPos(NewPlayer.GetPos()); // 플레이어의 위치를 기준으로 총알의 위치를 선정
-            NewBullet[CurBullet].Fire(); // CurBullet의 기준 번째의 총알의 상태를 발사한 상태인 false -> true로 변경
-            // 총알의 개수는 무한하지 않다.
-            ++CurBullet; // CurBullet 을 증감해 다음 총알 순번으로 사용
-
-            if (BulletCount <= CurBullet) // 정해진 BulletCount의 총알 개수보다 사용한 총알 개수인 CurBullet이 크거나 같아지는 경우 0으로 다시 돌린다.
-            {
-                CurBullet = 0;
-            }
-
-        }
-
-        for (int i = 0; i < MonsterCount; i++) // 동적할당 한 몬스터 수만큼 몬스터의 위치와 랜더링 
-        {
-            NewScreen.SetChar(ArrMonster[i]); // 맵에 위치와 랜더 설정
-        }
-
-        for (int i = 0; i < BulletCount; i++) // BulletCount 값만큼의 for문의 반복
-        {
-            if (false == NewBullet[i].GetIsFire()) // 
-            {
-                continue;
-            }
-            // 발사한 상태인 true인 경우
-            NewBullet[i].Move(); // 
-            NewScreen.SetChar(NewBullet[i]); // 맵에 총알 위치와 랜더 설정
-        }
-
-        NewScreen.SetChar(NewPlayer); // 플레이어 위치, 랜더 설정
-        NewScreen.PrintScreen(); // 화면으로 보여주기 -> 콘솔창 한번 지우고 마지막에 화면 초기값으로 돌리기
+        NewScreen.PrintScreen();
     }
 
-    if (NewBullet) // 릭을 위한 방지
+    for (size_t i = 0; i < AllObject.size(); i++)
     {
-        delete[] NewBullet;
-        NewBullet = nullptr;
+        if (nullptr != AllObject[i])
+        {
+            delete AllObject[i];
+            AllObject[i] = nullptr;
+        }
     }
-
 }
 
 // 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴

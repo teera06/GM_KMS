@@ -111,6 +111,8 @@ private:
 
 int main()
 {
+    LeckCheck;
+
     IntArray NewArray = IntArray(5);
     // [?][?][?][?][?]
 
@@ -147,7 +149,7 @@ int main()
 
 
     // 리사이즈 값은 얼마든지 변경될 수 있다.
-    NewArray.ReSize(3);
+    NewArray.ReSize(10);
     // ?는 무슨값이 들어가 있어도 괜찮다.
     // [0][1][2][3][4][?][?][?][?][?]
 

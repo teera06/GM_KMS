@@ -2,7 +2,7 @@
 
 #include <conio.h>
 
-void Player::KeyInput()
+void Player::Update()
 {
 	IsFire = false;
 
