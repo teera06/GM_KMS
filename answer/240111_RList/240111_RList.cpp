@@ -52,7 +52,7 @@ public:
 		ListNode* CurNode = nullptr;
 	};
 
-	//--
+	//-- 반대 개념으로 생각하자 -> iterator에서 사용 한거 다 가져오기
 	class reverse_iterator
 	{
 
@@ -77,9 +77,10 @@ public:
 		{
 			return CurNode->Data;
 		}
-
+		// 여기까지는 동일
+		// 
 		// 연산자 겹지정 중에 
-		void operator++()
+		void operator++() // 반대로 작동해야 하므로 Next가 아닌 Prev로 반대로 이동
 		{
 			CurNode = CurNode->Prev;
 		}
@@ -126,7 +127,7 @@ public:
 
 	reverse_iterator rend()
 	{
-		return reverse_iterator(Start->Next);
+		return reverse_iterator(Start);
 	}
 
 
@@ -237,7 +238,7 @@ int main()
 		MyList NewList = MyList();
 		for (int i = 0; i < 5; i++)
 		{
-			NewList.push_front(i);
+			NewList.push_back(i);
 			// NewList.push_front();
 		}
 
