@@ -1,6 +1,7 @@
 #pragma once
 #include <ConsoleEngine/ConsoleObject.h>
-#include <vector>
+#include <list>
+#include <map>
 
 class Player : public ConsoleObject
 {
@@ -16,17 +17,10 @@ public:
 		return IsGameEnd;
 	}
 
-	void SetAllObject(std::vector<ConsoleObject*>* _AllObjectPtr)
-	{
-		AllObjectPtr = _AllObjectPtr;
-	}
-
 protected:
 	void Update() override;
 
 private:
-	std::vector<ConsoleObject*>* AllObjectPtr = nullptr;
-
 	bool IsFire = false;
 	bool IsGameEnd = false;
 };

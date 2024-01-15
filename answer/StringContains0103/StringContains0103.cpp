@@ -178,7 +178,7 @@ private:
 
 int main()
 {
-	LeckCheck;
+	LeakCheck;
 
 	{
 		std::cout << "std ¸®½ºÆ®" << std::endl;
