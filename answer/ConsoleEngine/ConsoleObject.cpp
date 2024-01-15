@@ -30,9 +30,9 @@ char ConsoleObject::GetRenderChar() const
 
 
 
-ConsoleObject* ConsoleObject::Collision(int _UpdateOrder)
+ConsoleObject* ConsoleObject::Collision(int _UpdateOrder) // 오브젝트끼리의 충돌
 {
-    std::list<ConsoleObject*>& ObjectList = GetCore()->AllUpdateObject[_UpdateOrder];
+    std::list<ConsoleObject*>& ObjectList = GetCore()->AllUpdateObject[_UpdateOrder]; // Map(Key : enum, value : list(플레이어, 몬스터, 총알))
 
     std::list<ConsoleObject*>::iterator StartIter = ObjectList.begin();
     std::list<ConsoleObject*>::iterator EndIter = ObjectList.end();

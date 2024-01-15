@@ -14,12 +14,12 @@ class EngineCore
 public:
 	// 보통 애가 클래스
 	// 어차피 자신의 맴버변수는 자기 스스로가 알아서 지키겠지.
-	ConsoleScreen Screen = ConsoleScreen();
+	ConsoleScreen Screen = ConsoleScreen(); // 화면 생성
 
-	void Init(int2 _ScreenSize);
-	void Start();
+	void Init(int2 _ScreenSize); // 화면 생성
+	void Start(); // 실행(업데이트, 랜더링, 릴리즈)
 
-	template<typename ObjectType, typename EnumType>
+	template<typename ObjectType, typename EnumType> // 미정
 	ObjectType* CreateObject(EnumType _Order)
 	{
 		return CreateObject<ObjectType>(_Order, _Order);
@@ -41,7 +41,7 @@ public:
 		return NewObject;
 	}
 
-	void EngineEnd()
+	void EngineEnd() // 엔진 실행 종료
 	{
 		EngineUpdate = false;
 	}
@@ -56,8 +56,8 @@ protected:
 
 
 private:
-	std::map<int, std::list<ConsoleObject*>> AllUpdateObject;
-	std::map<int, std::list<ConsoleObject*>> AllRenderObject;
-	bool EngineUpdate = true;
+	std::map<int, std::list<ConsoleObject*>> AllUpdateObject; // 업데이트 영역 (내부)
+	std::map<int, std::list<ConsoleObject*>> AllRenderObject; // 랜더링 영역 (외부)
+	bool EngineUpdate = true; // 미정
 };
 
