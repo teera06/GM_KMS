@@ -9,5 +9,7 @@ protected:
 
 	int2 dir = { 0,0 };
 	int2 nextdir = { 0,0 };
+	int2 headsave = { 0,0 };
+	int2 bodysave = { 0,0 };
 };
 

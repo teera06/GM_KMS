@@ -23,7 +23,7 @@ void Head::Update()
 
 	// X Y
 	// 1 0
-
+	headsave = GetPos();
 	switch (Select)
 	{
 	case 'A':
@@ -31,6 +31,7 @@ void Head::Update()
 		dir = Left;
 		if (nextdir != dir) {
 			AddPos(dir);
+		
 			nextdir = Right;
 		}
 		break;
@@ -39,6 +40,7 @@ void Head::Update()
 		dir = Down;
 		if (nextdir != dir) {
 			AddPos(dir);
+			
 			nextdir = Up;
 		}
 		break;
@@ -47,6 +49,7 @@ void Head::Update()
 		dir = Up;
 		if (nextdir != dir) {
 			AddPos(dir);
+			
 			nextdir = Down;
 		}
 		break;
@@ -55,6 +58,7 @@ void Head::Update()
 		dir = Right;
 		if (nextdir != dir) {
 			AddPos(dir);
+			
 			nextdir = Left;
 		}
 		break;
@@ -71,12 +75,24 @@ void Head::Update()
 		return;
 	}
 
+	if (Back!=nullptr)
+	{
+		Back->SetPos(headsave);
+
+	}
+
 	Body* CurBody = BodyManager::GetCurBody();
 
 	if (CurBody->GetPos() == GetPos())
 	{
 		Back= CurBody;
+		this->SetPos(Back->GetPos());
+		CurBody->SetPos(headsave);
 		BodyManager::ResetBody();
 	}
+
+	
+
+	
 
 }
