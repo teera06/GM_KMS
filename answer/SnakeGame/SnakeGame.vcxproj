@@ -152,16 +152,16 @@
     <ClCompile Include="240116_SnakeTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ConsoleEngine\ConsoleEngine.vcxproj">
-      <Project>{7bfc4380-26d0-4afa-92cb-8481eff311a8}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Body.h" />
     <ClInclude Include="BodyManager.h" />
     <ClInclude Include="GlobalValue.h" />
     <ClInclude Include="Head.h" />
     <ClInclude Include="Part.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ConsoleEngine\ConsoleEngine.vcxproj">
+      <Project>{16f2cc42-26e3-4631-999d-b76d95cb7ab7}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
