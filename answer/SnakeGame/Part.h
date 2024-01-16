@@ -5,7 +5,7 @@ class Part : public ConsoleObject
 {
 
 protected:
-	Part* Prev = nullptr;
-	Part* Next = nullptr;
+	Part* Front = nullptr;
+	Part* Back = nullptr;
 };
 

@@ -75,7 +75,7 @@ void Head::Update()
 
 	if (CurBody->GetPos() == GetPos())
 	{
-		
+		Back= CurBody;
 		BodyManager::ResetBody();
 	}
 
