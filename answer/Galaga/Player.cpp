@@ -45,12 +45,13 @@ void Player::Update()
 	case 'Q':
 	case 'q':
 	{
-		Bullet* NewBullet = GetCore()->CreateObject<Bullet>(GalagaUpdateType::Bullet, GalagaRenderType::Bullet);
-		NewBullet->SetPos(GetPos());
+		// Q를 누를때 총알 생성
+		Bullet* NewBullet = GetCore()->CreateObject<Bullet>(GalagaUpdateType::Bullet, GalagaRenderType::Bullet); 
+		NewBullet->SetPos(GetPos()); // 총알 위치 설정
 		break;
 	}
 	case '1':
-		GetCore()->EngineEnd();
+		GetCore()->EngineEnd(); // 1번 누르면 게임 종료
 		break;
 	default:
 		break;

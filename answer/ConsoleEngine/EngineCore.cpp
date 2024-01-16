@@ -5,7 +5,7 @@ void EngineCore::Init(int2 _ScreenSize) // 拳搁 农扁 积己
 {
     LeakCheck; // 腐 眉农
 
-    Screen.CreateScreen(/*&NewScreen => this, */20, 20); // 拳搁 农扁 积己
+    Screen.CreateScreen(/*&NewScreen => this, */_ScreenSize.Y, _ScreenSize.X); // 拳搁 农扁 积己
 }
 
 void EngineCore::Start()

@@ -19,25 +19,28 @@ public:
 	void Init(int2 _ScreenSize); // 화면 생성
 	void Start(); // 실행(업데이트, 랜더링, 릴리즈)
 
+	// CreateObject 오버로딩 인자값이 다르므로 다른 이름으로 취급
 	template<typename ObjectType, typename EnumType> // 미정
 	ObjectType* CreateObject(EnumType _Order)
 	{
 		return CreateObject<ObjectType>(_Order, _Order);
 	}
 
+	// 갤러그에서 사용하는 CreateObject
 	template<typename ObjectType, typename UpdateEnumType, typename RenderEnumType>
 	ObjectType* CreateObject(UpdateEnumType _UpdateOrder, RenderEnumType _RenderOrder)
 	{
 		return CreateObject<ObjectType>(static_cast<int>(_UpdateOrder), static_cast<int>(_RenderOrder));
 	}
 
+	// 위의 CreatObject에서 반환한 값 여기다 대입 
 	template<typename ObjectType>
 	ObjectType* CreateObject(int _UpdateOrder, int _RenderOrder)
 	{
-		ObjectType* NewObject = new ObjectType();
-		NewObject->ConsoleObject::SetCore(this);
-		AllUpdateObject[_UpdateOrder].push_back(NewObject);
-		AllRenderObject[_RenderOrder].push_back(NewObject);
+		ObjectType* NewObject = new ObjectType(); // 동적 할당 -> 엔진 담당
+		NewObject->ConsoleObject::SetCore(this); // 
+		AllUpdateObject[_UpdateOrder].push_back(NewObject); // Map에다가 삽입
+		AllRenderObject[_RenderOrder].push_back(NewObject); // Map에다가 삽입
 		return NewObject;
 	}
 

@@ -68,7 +68,7 @@ private:
 
 	int2 Pos = { 0, 0 }; // 위치값
 	char RenderChar = '@'; // 랜더링 값
-	class EngineCore* Core = nullptr;
+	class EngineCore* Core = nullptr; // 전방 선언
 
 	void SetCore(EngineCore* _Core)
 	{

@@ -15,27 +15,27 @@
 
 int main()
 {
-    EngineCore EngineCore;
+    EngineCore EngineCore; // 엔진 코어 선언 
 
-    EngineCore.Init({ 20, 20 });
+    EngineCore.Init({ 20, 20 }); // Y,X 크기 결정
 
 
     {
         // Player* NewObject = new Player();
-        Player* NewObject = EngineCore.CreateObject<Player>(GalagaUpdateType::Player, GalagaRenderType::Player);
-        NewObject->SetPos({ EngineCore.Screen.GetScreenX() / 2, EngineCore.Screen.GetScreenY() - 2 });
+        Player* NewObject = EngineCore.CreateObject<Player>(GalagaUpdateType::Player, GalagaRenderType::Player); // 플레이어 생성
+        NewObject->SetPos({ EngineCore.Screen.GetScreenX() / 2, EngineCore.Screen.GetScreenY() - 2 }); // Playe 위치 설정
     }
 
     {
-        const int MonsterCount = EngineCore.Screen.GetScreenX() / 2;
-        for (int i = 0; i < MonsterCount; i++)
+        const int MonsterCount = EngineCore.Screen.GetScreenX() / 2; // Monster 마리수
+        for (int i = 0; i < MonsterCount; i++) // 몬스터 마리수 만큼 몬스터 생성
         {
-            Monster* NewObject = EngineCore.CreateObject<Monster>(GalagaUpdateType::Monster, GalagaRenderType::Monster);
-            NewObject->SetPos({ i, 0 });
-            NewObject->SetRenderChar('&');
+            Monster* NewObject = EngineCore.CreateObject<Monster>(GalagaUpdateType::Monster, GalagaRenderType::Monster); // Monster Create (안에서 동적할당)
+            NewObject->SetPos({ i, 0 }); // 몬스터 생성 위치 설정
+            NewObject->SetRenderChar('&'); // 몬스터 랜더링 결정
         }
     }
 
-    EngineCore.Start();
+    EngineCore.Start(); // 엔진 스타트
 
 }

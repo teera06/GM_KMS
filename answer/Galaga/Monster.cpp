@@ -1,15 +1,23 @@
 #include "Monster.h"
 #include "ContentsEnum.h"
-
+#include <iostream>
 
 void Monster::Update()
 {
-	ConsoleObject* CollisionObject = Collision(GalagaUpdateType::Bullet);
+	ConsoleObject* CollisionObject1 = Collision(GalagaUpdateType::Bullet);
+	ConsoleObject* CollisionObject2 = Collision(GalagaUpdateType::Player);
 
-	if (nullptr != CollisionObject)
+	if (nullptr != CollisionObject1)
 	{
 		Destroy();
-		CollisionObject->Destroy();
+		CollisionObject1->Destroy();
+	}
+
+	if (nullptr != CollisionObject2)
+	{
+		Destroy();
+		CollisionObject2->Destroy();
+		GetCore()->EngineEnd();
 	}
 
 	//AddPos(Right);
@@ -30,5 +38,11 @@ void Monster::Update()
 		}
 		Value = 10;
 		AddPos(Down);
+		++count;
+
+		if (count == 19)
+		{
+			GetCore()->EngineEnd();
+		}
 	}
 }
