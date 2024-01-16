@@ -24,8 +24,6 @@ void Monster::Update()
 
 	// {1.0 }
 	// Dir
-	AddPos(Dir);
-
 	--Value;
 	if (0 >= Value) // 0Àº ´Ù¿î
 	{
@@ -36,7 +34,7 @@ void Monster::Update()
 		else {
 			Dir = Right;
 		}
-		Value = 10;
+		Value = 11;
 		AddPos(Down);
 		++count;
 
@@ -44,5 +42,8 @@ void Monster::Update()
 		{
 			GetCore()->EngineEnd();
 		}
+	}
+	else {
+		AddPos(Dir);
 	}
 }

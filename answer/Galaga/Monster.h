@@ -7,7 +7,7 @@ protected:
 	void Update() override;
 
 	int2 Dir = Right;
-	int Value = 10;
+	int Value = 11;
 	int count = 0;
 };
 
