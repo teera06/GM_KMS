@@ -24,6 +24,7 @@
     <ProjectGuid>{875161cd-e6ad-4ba5-9bd3-5ff1b9a0dfd9}</ProjectGuid>
     <RootNamespace>SnakeGame</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>240116_SnakeTest</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -143,7 +144,7 @@
     <ClCompile Include="BodyManager.cpp" />
     <ClCompile Include="Head.cpp" />
     <ClCompile Include="Part.cpp" />
-    <ClCompile Include="SnakeGame.cpp" />
+    <ClCompile Include="240116_SnakeTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConsoleEngine\ConsoleEngine.vcxproj">
