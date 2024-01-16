@@ -8,7 +8,7 @@ ConsoleObject::ConsoleObject()
 }
 
 ConsoleObject::ConsoleObject(const int2& _StartPos, char _RenderChar)
-    : Pos(_StartPos), RenderChar(_RenderChar)
+	: Pos(_StartPos), RenderChar(_RenderChar)
 {
 
 }
@@ -20,19 +20,19 @@ ConsoleObject::~ConsoleObject()
 
 int2 ConsoleObject::GetPos() const
 {
-    return Pos;
+	return Pos;
 }
 
 char ConsoleObject::GetRenderChar() const
 {
-    return RenderChar;
+	return RenderChar;
 }
 
 
 
-ConsoleObject* ConsoleObject::Collision(int _UpdateOrder) // 오브젝트끼리의 충돌
+ConsoleObject* ConsoleObject::Collision(int _UpdateOrder)
 {
-    std::list<ConsoleObject*>& ObjectList = GetCore()->AllUpdateObject[_UpdateOrder]; // Map(Key : enum, value : list(플레이어, 몬스터, 총알))
+    std::list<ConsoleObject*>& ObjectList = GetCore()->AllUpdateObject[_UpdateOrder];
 
     std::list<ConsoleObject*>::iterator StartIter = ObjectList.begin();
     std::list<ConsoleObject*>::iterator EndIter = ObjectList.end();
