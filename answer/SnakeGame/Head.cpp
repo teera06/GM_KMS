@@ -28,7 +28,7 @@ void Head::Update()
 	case 'A':
 	case 'a':
 		dir = Left;
-		if (nextdir != dir) {
+		if (nextdir != dir) { // 다음 누를 키와 현재키가 같아서는 안된다
 			AddPos(dir);
 		
 			nextdir = Right;
@@ -91,14 +91,11 @@ void Head::Update()
 
 	Body* CurBody = BodyManager::GetCurBody();
 
-	if (CurBody->GetPos() == GetPos())
+	if (CurBody->GetPos() == GetPos()) // 충돌이 일어날 경우
 	{
-		bodylist.push_back(CurBody);
-		std::list<Body*>::iterator StartIter = bodylist.begin();
-		std::list<Body*>::iterator EndIter = bodylist.end();
-
-
-		Back = *StartIter;
+		bodylist.push_back(CurBody); // list에 현재 생긴 몸통 부분을 저장
+		
+		Back = CurBody;
 		SetPos(Back->GetPos());
 		Back->SetPos(headsave);
 		BodyManager::ResetBody();
