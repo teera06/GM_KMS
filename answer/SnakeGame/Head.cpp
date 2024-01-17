@@ -29,7 +29,7 @@ void Head::Update()
 	case 'a':
 		dir = Left;
 		if (nextdir != dir) { // 다음 누를 키와 현재키가 같아서는 안된다
-			if ((GetPos() + dir).X != 0)
+			if ((GetPos() + dir).X != 0) // 다음 위치가 벽이 있는 위치가 아닌 경우에만 이동 가능
 			{
 				AddPos(dir);
 				nextdir = Right; // Left인 경우 nextdir=Right 저장
@@ -51,7 +51,7 @@ void Head::Update()
 			if ((GetPos() + dir).Y != y - 1)
 			{
 				AddPos(dir);
-				nextdir = Up; // Left인 경우 nextdir=Right 저장
+				nextdir = Up; 
 			}
 			else
 			{
@@ -69,7 +69,7 @@ void Head::Update()
 			if ((GetPos() + dir).Y != 0)
 			{
 				AddPos(dir);
-				nextdir = Down; // Left인 경우 nextdir=Right 저장
+				nextdir = Down; 
 			}
 			else
 			{
@@ -87,7 +87,7 @@ void Head::Update()
 			if ((GetPos() + dir).X != x-1)
 			{
 				AddPos(dir);
-				nextdir = Left; // Left인 경우 nextdir=Right 저장
+				nextdir = Left; 
 			}
 			else
 			{
