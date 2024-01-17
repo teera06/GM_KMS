@@ -41,10 +41,11 @@ int main()
         GBodyManager = EngineCore.CreateManager<BodyManager>(0);
     }
 
-    {
+    { 
         // Player* NewObject = new Player();
         Head* NewPlayer = EngineCore.CreateObject<Head>();
         NewPlayer->SetPos({ EngineCore.Screen.GetScreenX() / 2, EngineCore.Screen.GetScreenY() - 2 });
+        NewPlayer->Setscreenxy(EngineCore.Screen.GetScreenX(), EngineCore.Screen.GetScreenY()); // 스크린 x,y 크기 받기
     }
 
     EngineCore.Start();

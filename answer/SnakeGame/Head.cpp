@@ -29,8 +29,15 @@ void Head::Update()
 	case 'a':
 		dir = Left;
 		if (nextdir != dir) { // 다음 누를 키와 현재키가 같아서는 안된다
-			AddPos(dir);
-			nextdir = Right; // Left인 경우 nextdir=Right 저장
+			if ((GetPos() + dir).X != 0)
+			{
+				AddPos(dir);
+				nextdir = Right; // Left인 경우 nextdir=Right 저장
+			}
+			else
+			{
+				return;
+			}
 		}
 		else { // nextdir==dir이 같은 경우 리턴
 			return;
@@ -41,9 +48,15 @@ void Head::Update()
 	case 's':
 		dir = Down;
 		if (nextdir != dir) {
-			AddPos(dir);
-			
-			nextdir = Up;
+			if ((GetPos() + dir).Y != y - 1)
+			{
+				AddPos(dir);
+				nextdir = Up; // Left인 경우 nextdir=Right 저장
+			}
+			else
+			{
+				return;
+			}
 		}
 		else {
 			return;
@@ -53,9 +66,15 @@ void Head::Update()
 	case 'w':
 		dir = Up;
 		if (nextdir != dir) {
-			AddPos(dir);
-			
-			nextdir = Down;
+			if ((GetPos() + dir).Y != 0)
+			{
+				AddPos(dir);
+				nextdir = Down; // Left인 경우 nextdir=Right 저장
+			}
+			else
+			{
+				return;
+			}
 		}
 		else {
 			return;
@@ -65,9 +84,15 @@ void Head::Update()
 	case 'd':
 		dir = Right;
 		if (nextdir != dir) {
-			AddPos(dir);
-			
-			nextdir = Left;
+			if ((GetPos() + dir).X != x-1)
+			{
+				AddPos(dir);
+				nextdir = Left; // Left인 경우 nextdir=Right 저장
+			}
+			else
+			{
+				return;
+			}
 		}
 		else {
 			return;
