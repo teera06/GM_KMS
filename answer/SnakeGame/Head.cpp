@@ -22,7 +22,7 @@ void Head::Update()
 
 	// X Y
 	// 1 0
-	headsave = GetPos();
+	headsave = GetPos(); // 이동하기전의 현재 헤드의 위치를 미리 저장한다.
 	switch (Select)
 	{
 	case 'A':
@@ -30,10 +30,13 @@ void Head::Update()
 		dir = Left;
 		if (nextdir != dir) { // 다음 누를 키와 현재키가 같아서는 안된다
 			AddPos(dir);
-		
-			nextdir = Right;
+			nextdir = Right; // Left인 경우 nextdir=Right 저장
+		}
+		else { // nextdir==dir이 같은 경우 리턴
+			return;
 		}
 		break;
+		// 아래도 같은 규칙 적용
 	case 'S':
 	case 's':
 		dir = Down;
@@ -41,6 +44,9 @@ void Head::Update()
 			AddPos(dir);
 			
 			nextdir = Up;
+		}
+		else {
+			return;
 		}
 		break;
 	case 'W':
@@ -51,6 +57,9 @@ void Head::Update()
 			
 			nextdir = Down;
 		}
+		else {
+			return;
+		}
 		break;
 	case 'D':
 	case 'd':
@@ -60,6 +69,10 @@ void Head::Update()
 			
 			nextdir = Left;
 		}
+		else {
+			return;
+		}
+		
 		break;
 	case '1':
 		GetCore()->EngineEnd();
@@ -74,18 +87,20 @@ void Head::Update()
 		return;
 	}
 
-	if (Back!=nullptr)
+	if (Back!=nullptr) // Back이 nullptr이 아닌 경우 
 	{
 		std::list<Body*>::iterator StartIter = bodylist.begin();
 		std::list<Body*>::iterator EndIter = bodylist.end();
 		for (/*std::list<int>::iterator StartIter = NewList.begin()*/
 			; StartIter != EndIter
-			; ++StartIter)
+			; ++StartIter) // 리스트에 들어 있는 수 만큼 리스트 순회
 		{
 			Back=*StartIter;
-			bodysave = Back->GetPos();
-			Back->SetPos(headsave);
-			headsave = bodysave;
+			bodysave = Back->GetPos(); // bodysave에 몸통의 현재 위치 저장(위치값이 변하기전에 미리 저장)
+			Back->SetPos(headsave); // 현재 headsave의 위치값을 back(Curbody)에 적용
+			headsave = bodysave; // headsave에 아까 저장한 몸통의 현재 위치를 저장
+			// 작동 원리 
+			// 이동할때 이동하기전의 위치를 다음 리스트에게 알려줘야 한다. -> 리스트 순회를 돌리며 마지막 순번까지 for문 반복
 		}
 	}
 
@@ -95,8 +110,9 @@ void Head::Update()
 	{
 		bodylist.push_back(CurBody); // list에 현재 생긴 몸통 부분을 저장
 		
-		Back = CurBody;
-		SetPos(Back->GetPos());
+		// 헤드와 몸통 위치 변경
+		Back = CurBody; 
+		SetPos(Back->GetPos());  
 		Back->SetPos(headsave);
 		BodyManager::ResetBody();
 	}
