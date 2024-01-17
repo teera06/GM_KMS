@@ -111,6 +111,8 @@ void Head::Update()
 		return;
 	}
 
+
+
 	if (Back!=nullptr) // Back이 nullptr이 아닌 경우 
 	{
 		std::list<Body*>::iterator StartIter = bodylist.begin();
@@ -141,8 +143,8 @@ void Head::Update()
 		BodyManager::ResetBody();
 	}
 
-	
-
-	
-
+	if(GetPos().Y == 0 || GetPos().X == x - 1 || GetPos().X == 0 || GetPos().Y == y - 1) // 벽에 닿으면 게임 종료
+	{
+		GetCore()->EngineEnd();
+	}
 }
