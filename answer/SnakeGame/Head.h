@@ -20,6 +20,7 @@ protected:
 	int2 bodysave = { 0,0 }; // 바디의 이전 위치 저장
 	int x = 0;
 	int y = 0;
+	int count = 0;
 	std::list<Body*> bodylist; // curbody 값 받기
 };
 

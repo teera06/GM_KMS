@@ -29,14 +29,13 @@ void Head::Update()
 	case 'a':
 		dir = Left;
 		if (nextdir != dir) { // 다음 누를 키와 현재키가 같아서는 안된다
-			if ((GetPos() + dir).X != 0) // 다음 위치가 벽이 있는 위치가 아닌 경우에만 이동 가능
-			{
-				AddPos(dir);
-				nextdir = Right; // Left인 경우 nextdir=Right 저장
-			}
-			else
+			if ((GetPos() + dir).X <0) // X값이 0보다 작을 경우 -> 범위를 벗어난 장소는 이동 불가
 			{
 				return;
+			}
+			else {
+				AddPos(dir);
+				nextdir = Right; // Left인 경우 nextdir=Right 저장
 			}
 		}
 		else { // nextdir==dir이 같은 경우 리턴
@@ -48,14 +47,14 @@ void Head::Update()
 	case 's':
 		dir = Down;
 		if (nextdir != dir) {
-			if ((GetPos() + dir).Y != y - 1)
+			if ((GetPos() + dir).Y > y - 1)
 			{
-				AddPos(dir);
-				nextdir = Up; 
+				return;
 			}
 			else
 			{
-				return;
+				AddPos(dir);
+				nextdir = Up;
 			}
 		}
 		else {
@@ -66,14 +65,14 @@ void Head::Update()
 	case 'w':
 		dir = Up;
 		if (nextdir != dir) {
-			if ((GetPos() + dir).Y != 0)
+			if ((GetPos() + dir).Y < 0)
 			{
-				AddPos(dir);
-				nextdir = Down; 
+				return;
 			}
 			else
 			{
-				return;
+				AddPos(dir);
+				nextdir = Down;
 			}
 		}
 		else {
@@ -84,14 +83,14 @@ void Head::Update()
 	case 'd':
 		dir = Right;
 		if (nextdir != dir) {
-			if ((GetPos() + dir).X != x-1)
+			if ((GetPos() + dir).X > x-1)
 			{
-				AddPos(dir);
-				nextdir = Left; 
+				return;
 			}
 			else
 			{
-				return;
+				AddPos(dir);
+				nextdir = Left;
 			}
 		}
 		else {
@@ -134,7 +133,7 @@ void Head::Update()
 	if (CurBody->GetPos() == GetPos()) // 충돌이 일어날 경우
 	{
 		bodylist.push_back(CurBody); // list에 현재 생긴 몸통 부분을 저장
-		
+		++count;
 		// 헤드와 몸통 위치 변경
 		Back = CurBody; 
 		SetPos(Back->GetPos());  
