@@ -7,6 +7,7 @@
     <ClCompile Include="Part.cpp" />
     <ClCompile Include="BodyManager.cpp" />
     <ClCompile Include="GlobalValue.cpp" />
+    <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Head.h" />
@@ -14,5 +15,6 @@
     <ClInclude Include="Part.h" />
     <ClInclude Include="BodyManager.h" />
     <ClInclude Include="GlobalValue.h" />
+    <ClInclude Include="Wall.h" />
   </ItemGroup>
 </Project>

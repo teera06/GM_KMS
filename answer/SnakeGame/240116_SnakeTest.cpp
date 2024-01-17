@@ -6,6 +6,7 @@
 #include "Head.h"
 #include "BodyManager.h"
 #include "GlobalValue.h"
+#include "Wall.h"
 
 enum class SnakeOrder
 {
@@ -16,7 +17,24 @@ enum class SnakeOrder
 int main()
 {
     EngineCore EngineCore;
-    EngineCore.Init({ 10, 10 });
+    EngineCore.Init({ 20, 20 });
+
+    {
+        Wall* NewWall; // º® »ý¼º
+        for (int y = 0; y < EngineCore.Screen.GetScreenY(); y++)
+        {
+            for (int x = 0; x < EngineCore.Screen.GetScreenX(); x++)
+            {
+                if (y == 0 || x == 0 || y == EngineCore.Screen.GetScreenY() - 1 || x == EngineCore.Screen.GetScreenX() - 1)
+                {
+                    NewWall = EngineCore.CreateObject<Wall>();
+                    NewWall->SetPos({x,y});
+                    NewWall->SetRenderChar('!');
+
+                }
+            }
+        }
+    }
 
     {
         // Player* NewObject = new Player();
