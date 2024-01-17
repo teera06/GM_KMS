@@ -2,7 +2,6 @@
 #include <conio.h>
 #include <ConsoleEngine/EngineCore.h>
 #include "BodyManager.h"
-#include "Body.h"
 
 // 
 // 1. 내가 특정 방향으로 진행했다면 다음 입력때는 그 반대방향으로는 갈수가 없다.
@@ -77,17 +76,31 @@ void Head::Update()
 
 	if (Back!=nullptr)
 	{
-		Back->SetPos(headsave);
-
+		std::list<Body*>::iterator StartIter = bodylist.begin();
+		std::list<Body*>::iterator EndIter = bodylist.end();
+		for (/*std::list<int>::iterator StartIter = NewList.begin()*/
+			; StartIter != EndIter
+			; ++StartIter)
+		{
+			Back=*StartIter;
+			bodysave = Back->GetPos();
+			Back->SetPos(headsave);
+			headsave = bodysave;
+		}
 	}
 
 	Body* CurBody = BodyManager::GetCurBody();
 
 	if (CurBody->GetPos() == GetPos())
 	{
-		Back= CurBody;
-		this->SetPos(Back->GetPos());
-		CurBody->SetPos(headsave);
+		bodylist.push_back(CurBody);
+		std::list<Body*>::iterator StartIter = bodylist.begin();
+		std::list<Body*>::iterator EndIter = bodylist.end();
+
+
+		Back = *StartIter;
+		SetPos(Back->GetPos());
+		Back->SetPos(headsave);
 		BodyManager::ResetBody();
 	}
 
